@@ -1,21 +1,62 @@
+### Variables
+@baseUrl = http://localhost:3000
 
-### Get all recipes
-
-GET http://localhost:3000/api/recipes
-
-### Get recipe by id 
-
-GET http://localhost:3000/api/recipes/2
-
-### Post a recipe
-
-POST http://localhost:3000/api/recipes
+### Register
+POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
-    "title": "Pâtes Bolo",
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "password": "testuser"
+}
+
+### Login
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testuser"
+}
+
+### Extract token from login response
+@token = {{login.response.body.$.token}}
+
+### Get all recipes
+GET {{baseUrl}}/api/recipes
+
+### Get recipe by id 
+GET {{baseUrl}}/api/recipes/2
+
+### Post a recipe with token
+POST {{baseUrl}}/api/recipes
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Pâte Bolo",
     "preparation_time": 3,
     "difficulty": 3,
     "budget": 3,
     "description": "Pâtes bolo très bonnes"
+}
+
+### Delete recipe by id 
+DELETE {{baseUrl}}/api/recipes/4
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Edit a recipe
+PUT {{baseUrl}}/api/recipes/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Pâtes Bolos",
+    "preparation_time": 2,
+    "difficulty": 2,
+    "budget": 2,
+    "description": "J'avais oublié un S"
 }

@@ -1,7 +1,8 @@
 import express from "express";
 import cors from 'cors';
 import dotenv from 'dotenv';
-import recipeRoutes from './routes/recipeRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import recipeRoutes from './routes/recipesRouter.js';
 import { initDatabase } from './models/initDb.js';
 
 dotenv.config();
@@ -12,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-
+app.use('/api/auth', authRoutes)
 app.use('/api/recipes', recipeRoutes);
 
 
